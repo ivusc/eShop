@@ -19,7 +19,7 @@ export const CardMenu : React.FC<ICardMenu> = ({ prodId }) => {
   const onDelete = (e:any) => {
     e.preventDefault();
     setProduct({
-      prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: 0, prodStock: 0, prodCategory: '',
+      prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: [], prodStock: 0, prodCategory: '',
     })
     handleDelete({id: prodId, e}).then(()=>{
       if (success){
