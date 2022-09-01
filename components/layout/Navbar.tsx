@@ -1,10 +1,11 @@
-import { Avatar, Box, Button, Flex, Heading, HStack, IconButton, Text, useToast } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, Heading, HStack, IconButton, Text, useColorModeValue, useToast } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { GradientButton } from '../common/GradientButton'
-import { FaShoppingCart } from 'react-icons/fa' 
+import { FaShoppingCart, FaUser } from 'react-icons/fa' 
 import { ThemeButton } from './ThemeButton'
+import { darkGradient, hoverDarkGradient, hoverLightGradient, lightGradient } from '../../constants'
 
 export const Navbar : React.FC = () => {
   const toast = useToast();
@@ -34,12 +35,15 @@ export const Navbar : React.FC = () => {
             <Heading size={'md'} pt={2} color={'white'} _hover={{ cursor: 'pointer'}}>Logo</Heading>
           </Link>
           <HStack color={'white'} spacing={6}>
-            {currentUser &&(
-              <Text as={Link} href={'/products/create'}>Create Product</Text>
+            {(currentUser?.role === 'seller') && (
+              <>
+                <Text as={Link} href={'/product/create'}>Create Product</Text>
+                <Text as={Link} href={'/product/create'}>View My Products</Text>
+              </>
             )}
           </HStack>
         </HStack>
-        <HStack flex={{ base: 1, md: 0 }} spacing={6}>
+        <HStack flex={{ base: 1, md: 0 }} spacing={4}>
           <ThemeButton />
           {(currentUser === null) || (currentUser === undefined) ? (
             <Link href={'/auth'}>
@@ -53,19 +57,34 @@ export const Navbar : React.FC = () => {
             </Link>
           ) : (
             <>
+            <Link href={`/profile/${currentUser.email}`}>
+              <IconButton 
+                icon={<FaUser />} 
+                aria-label={'user'}
+                color={useColorModeValue('white','gray.900')}
+                bgGradient={useColorModeValue(lightGradient, darkGradient)}
+                _hover={{
+                  bgGradient: useColorModeValue(hoverLightGradient, hoverDarkGradient),
+                  transform: 'translateY(2px)',
+                  boxShadow: 'lg',
+                }}
+              />
+            </Link>
               <Link href={`/cart/${currentUser.email}`}>
                 <IconButton 
                   icon={<FaShoppingCart />} 
                   aria-label={'cart'}
+                  color={useColorModeValue('white','gray.900')}
+                  bgGradient={useColorModeValue(lightGradient, darkGradient)}
                   _hover={{
+                    bg: useColorModeValue(hoverLightGradient, hoverDarkGradient),
                     transform: 'translateY(2px)',
                     boxShadow: 'lg',
-                    bg: 'gray.300'
                   }}
                 />
               </Link>
               <GradientButton 
-                buttonType={'green'}
+                buttonType={'red'}
                 display={{ base: 'none', md: 'inline-flex' }}
                 fontSize={'sm'}
                 fontWeight={600}

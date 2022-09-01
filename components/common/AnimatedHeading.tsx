@@ -15,7 +15,7 @@ export const AnimatedHeading: React.FC<IAnimatedHeading> = ({children}) => {
   `
   return (
     <Heading 
-      fontSize={{base:'5xl', md:'7xl'}} 
+      fontSize={{base:'5xl', md:'6xl'}} 
       mt={4}
       mb={4} 
       animation={`${colors} 7.5s linear infinite`}

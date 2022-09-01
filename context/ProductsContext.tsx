@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, Timestamp, updateDoc, where } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, deleteDoc, doc, DocumentData, DocumentReference, DocumentSnapshot, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, Timestamp, updateDoc, where } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { v4 } from 'uuid';
@@ -30,7 +30,13 @@ interface IProductContext{
     id: string;
     qty: number;
     type: 'add' | 'subtract';
-  }) => Promise<void> 
+  }) => Promise<void>;
+  updateRating: ({ id, rating, comment, e }: {
+    id: string;
+    rating: number;
+    comment: string;
+    e: any;
+}) => Promise<void>;
 }
 
 
@@ -39,7 +45,7 @@ export const ProductsContext = createContext({} as IProductContext)
 export const ProductsProvider = ({children}: { children: React.ReactNode}) => {
   const [products, setProducts] = useState([] as Array<IProduct>);
   const [product, setProduct] = useState<IProduct>({
-    prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: 0, prodStock: 0, prodCategory: '',
+    prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: [], prodStock: 0, prodCategory: '', discount: false,
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -47,8 +53,8 @@ export const ProductsProvider = ({children}: { children: React.ReactNode}) => {
   const { currentUser } = useContext(AuthContext);
 
   useEffect(()=>{
-    const q = query(collection(db, 'products'), orderBy('dtCreated', 'desc'))
-    onSnapshot(q, (querySnapshot) => {
+    const products = query(collection(db, 'products'), orderBy('dtCreated', 'desc'))
+    onSnapshot(products, (querySnapshot) => {
       setProducts(querySnapshot.docs.map(doc => ({
         prodId: doc.id,
         prodName: doc.data().name,
@@ -58,6 +64,7 @@ export const ProductsProvider = ({children}: { children: React.ReactNode}) => {
         prodStock: doc.data().stock,
         prodCategory: doc.data().category,
         imageUrl: doc.data().url,
+        discount: doc.data().discount,
         dtCreated: doc.data().dtCreated,
         sellerEmail: doc.data().sellerEmail,
       })))
@@ -95,8 +102,6 @@ export const ProductsProvider = ({children}: { children: React.ReactNode}) => {
       getDownloadURL(snapshot.ref).then((url) =>{
         setProduct({...product, imageUrl: url})
         alert(`Successfully uploaded. Url: ${url}`)
-        //setProdImg(null)
-        //handleSubmit();
       })
     })
     setLoading(false)
@@ -129,6 +134,7 @@ export const ProductsProvider = ({children}: { children: React.ReactNode}) => {
         stock: product.prodStock,
         category: product.prodCategory,
         sellerEmail: currentUser?.email,
+        discount: product.discount,
       })
       setLoading(false);
       setSuccess(true);
@@ -151,6 +157,23 @@ export const ProductsProvider = ({children}: { children: React.ReactNode}) => {
         })
       }
     } catch (err){
+      alert(err)
+    }
+  }
+
+  const updateRating = async ({id, rating, comment, e}:{id : string, rating: number, comment: string, e:any}) => {
+    e.preventDefault();
+    console.log(id,rating,comment)
+    const productDocRef = doc(db,'products',id);
+    try{
+      await updateDoc(productDocRef,{
+        rating: arrayUnion({
+          user: currentUser?.email,
+          rating: rating,
+          comment: comment,
+        })
+      })
+    } catch (err) {
       alert(err)
     }
   }
@@ -182,7 +205,8 @@ export const ProductsProvider = ({children}: { children: React.ReactNode}) => {
     handleUpdate,
     getProductById,
     getProductByRef,
-    updateStock
+    updateStock,
+    updateRating,
   }
   
   return (

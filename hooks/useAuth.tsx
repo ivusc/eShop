@@ -1,8 +1,8 @@
 import { useToast } from '@chakra-ui/react';
 import { NextRouter } from 'next/router';
 import React, { FormEvent, useContext, useState } from 'react'
+import { IAuthFormUser } from '../components/auth/AuthForm';
 import { AuthContext } from '../context/AuthContext';
-import { IUser } from '../interfaces';
 
 interface IStatus{
   error: string;
@@ -12,7 +12,7 @@ interface IStatus{
 export const useAuth = (router: NextRouter) => {
   const { login, signup } = useContext(AuthContext);
   const toast = useToast();
-  const [credentials, setCredentials] = useState<IUser>({
+  const [credentials, setCredentials] = useState<IAuthFormUser>({
     email: '', password: '', confirmPassword: '',
   });
   const [status, setStatus] = useState<IStatus>({

@@ -1,24 +1,32 @@
+import { User } from "firebase/auth";
+
+export interface IRating{
+  user: string;
+  rating: number;
+  comment?: string;
+}
+
 export interface IProduct{
   prodName: string;
   prodDesc: string;
   prodPrice: number;
-  prodRating: number;
+  prodRating: Array<IRating>;
   prodStock: number;
   prodCategory: string;
   prodId?: string;
   sellerEmail?: string;
   imageUrl?: string;
+  discount?: boolean;
   dtCreated?: {
     seconds: number;
     nanoseconds: number;
   }
 }
 
-export interface IUser{
-  email: string;
-  password: string;
-  confirmPassword?: string;
+export interface IUser extends User{
+  role: 'seller' | 'user' | 'admin';
 }
+
 
 export interface ICart{
   cartId: string;
@@ -42,7 +50,7 @@ export interface ICartProduct extends IProduct{
 }
 
 export interface IModalContent{
-  type: 'delete' | 'addToCart';
+  type: 'delete' | 'addToCart' | 'filter';
   header: string;
   description: React.ReactNode;
   action: string;

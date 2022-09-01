@@ -16,7 +16,7 @@ const CreateProduct : NextPage<WithRouterProps> = ({router}) => {
 
   useEffect(() => {
     setProduct({
-      prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: 0, prodStock: 0, prodCategory: '',
+      prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: [], prodStock: 0, prodCategory: '',
     })
   }, [])
 
@@ -41,6 +41,7 @@ const CreateProduct : NextPage<WithRouterProps> = ({router}) => {
           onSubmit={onAdd}
           product={product}
           setProduct={setProduct}
+          router={router}
         />
       </Container>
     </Section>

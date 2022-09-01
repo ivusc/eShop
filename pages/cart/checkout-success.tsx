@@ -13,7 +13,7 @@ const CheckoutSuccess : NextPage = () => {
   const { titleFontSize } = useContext(FontContext);
 
   useEffect(() => {
-    // clearCart();
+    clearCart();
   }, [cartItems])
   
   return (

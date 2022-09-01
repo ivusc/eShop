@@ -56,7 +56,7 @@ export const CardMenu : React.FC<ICardMenu> = ({ prodId }) => {
           bg={useColorModeValue('gray.100','gray.900')} 
           color={useColorModeValue('gray.900','gray.100')}
         >
-          <Link href={`/products/edit/${prodId}`}>
+          <Link href={`/product/edit/${prodId}`}>
             <MenuItem icon={<FaEdit />} _hover={{ bgGradient: hoverLightGradient }} _dark={{ _hover: { bgGradient: hoverDarkGradient }}}>
               Edit
             </MenuItem>

@@ -1,6 +1,7 @@
-import { FormControl, FormLabel, HStack, Input, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Textarea, VStack } from '@chakra-ui/react'
+import { FormControl, FormLabel, HStack, Input, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Switch, Textarea, useColorModeValue, VStack } from '@chakra-ui/react'
+import { NextRouter } from 'next/router'
 import React from 'react'
-import { Categories } from '../../constants'
+import { Categories, darkGradient, lightGradient } from '../../constants'
 import { IProduct } from '../../interfaces'
 import FileInput from '../common/FileInput'
 import { GradientButton } from '../common/GradientButton'
@@ -11,9 +12,10 @@ interface IForm{
   openDeleteModal?: () => void;
   product: IProduct;
   setProduct: React.Dispatch<React.SetStateAction<IProduct>>;
+  router: NextRouter,
 }
 
-export const Form : React.FC<IForm> = ({ type, onSubmit, openDeleteModal, product, setProduct }) => {
+export const Form : React.FC<IForm> = ({ type, onSubmit, openDeleteModal, product, setProduct, router }) => {
   return (
     <form onSubmit={(e) => onSubmit(e)} name='addTask'>
       <VStack spacing={4}>
@@ -61,11 +63,17 @@ export const Form : React.FC<IForm> = ({ type, onSubmit, openDeleteModal, produc
           ))}
         </Select>
       </FormControl>
+      <FormControl>
+        <HStack>
+          <FormLabel>Product on discount?</FormLabel>
+          <Switch colorScheme='green' size='lg' onChange={(e)=>setProduct({...product, discount: e.target.checked})}/>
+        </HStack>
+      </FormControl>
       <HStack spacing={5}>
         {type === 'update' && ( 
           <GradientButton size={'lg'} buttonType={'red'} onClick={openDeleteModal}>Delete</GradientButton>
         )}
-        <GradientButton type='submit' size={'lg'} buttonType={'orange'} >Cancel</GradientButton>
+        <GradientButton size={'lg'} buttonType={'orange'} onClick={()=>router.push('/')}>Cancel</GradientButton>
         <GradientButton type='submit' size={'lg'} buttonType={'green'} >Submit</GradientButton>
       </HStack>
       </VStack>

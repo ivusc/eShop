@@ -6,13 +6,19 @@ import { GradientButton } from "../common/GradientButton";
 
 interface IAuthForm{
   type: 'login' | 'signup';
-  credentials: IUser;
-  setCredentials: React.Dispatch<React.SetStateAction<IUser>>;
+  credentials: IAuthFormUser;
+  setCredentials: React.Dispatch<React.SetStateAction<IAuthFormUser>>;
   handleSubmit: (e?: FormEvent<HTMLFormElement>) => Promise<void>;
   handleKeyPress: ({ event, type }: {
     event: React.KeyboardEvent<HTMLDivElement>;
     type: 'login' | 'signup';
   }) => void;
+}
+
+export interface IAuthFormUser{
+  email: string;
+  password: string;
+  confirmPassword?: string;
 }
 
 export const AuthForm : React.FC<IAuthForm> = ({ type, credentials, handleKeyPress, setCredentials, handleSubmit }) => (

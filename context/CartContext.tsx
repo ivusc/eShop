@@ -35,7 +35,8 @@ export const CartProvider = ({children} : {children: React.ReactNode}) => {
   const [products, setProducts] = useState<Array<IProduct>>([]);
 
   useEffect(() => {
-    if (currentUser !== null){
+    console.log(currentUser)
+    if ((currentUser !== undefined) && (currentUser !== null)){
       const cart = query(collection(db, 'carts', currentUser?.email!, 'products'), orderBy('dtAdded', 'desc'))
       const product = query(collection(db,'products'))
       onSnapshot(cart, (querySnapshot) => {

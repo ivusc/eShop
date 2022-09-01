@@ -8,19 +8,26 @@ interface IRatingInput {
   scale: number,
   fillColor: string,
   strokeColor: string,
+  prodId: string,
+  updateRating: ({ id, rating, comment }: {
+    id: string;
+    rating: number;
+    comment: string;
+    e: any;
+  }) => Promise<void>
 }
 
 export const RatingInput = React.forwardRef(
-  ({ size, scale, fillColor, strokeColor } : IRatingInput, ref) => {
-    const [rating, setRating] = useState(0);
+  ({ size, scale, fillColor, strokeColor, updateRating, prodId } : IRatingInput, ref) => {
+    const [rating, setRating] = useState<{rating: number, comment: string}>({ rating: 0, comment: ''})
     const buttons = [];
 
     const onClickRatingButton = (idx: number) => {
-      if (idx === rating){
+      if (idx === rating?.rating){
         console.log(idx)
-        setRating(0);
+        setRating({...rating, rating: 0 });
       }
-      setRating(idx)
+      setRating({...rating, rating: idx });
     };
 
     const RatingIcon = ({idx, fill}:{idx: number, fill:boolean}) => {
@@ -64,21 +71,21 @@ export const RatingInput = React.forwardRef(
     
 
     for (let i = 1; i <= scale; i++) {
-      buttons.push(<RatingButton key={i} idx={i} fill={i<=rating} />)
+      buttons.push(<RatingButton key={i} idx={i} fill={i<=rating.rating} />)
     }
 
     return (
-      <form>
+      <form onSubmit={(e)=>updateRating({id: prodId,comment: rating.comment, rating: rating.rating, e})}>
         <Box display={'flex'} flexDir={'column'} alignItems={'center'}>
-          <Textarea width={'90%'} mt={8} placeholder={'Enter comment'}/>
+          <Textarea width={'90%'} mt={8} placeholder={'Enter comment'} onChange={(e)=> setRating({...rating, comment: e.target.value})}/>
         </Box>
         <Stack isInline mt={4} mb={1} justify="center">
-          <input name="rating" type="hidden" value={rating}/>
+          <input name="rating" type="hidden" value={rating.rating}/>
           {buttons}
         </Stack>
         <Box width={`full`} textAlign="center" mb={2}>
             <Text fontSize="md" textTransform="uppercase">
-              Rating: <Text as={chakra.span} fontWeight={'bold'}>{rating}</Text>
+              Rating: <Text as={chakra.span} fontWeight={'bold'}>{rating.rating}</Text>
             </Text>
         </Box>
         <Box display={'flex'} flexDir={'row'} justifyContent={'center'}>

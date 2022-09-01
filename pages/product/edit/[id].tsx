@@ -52,6 +52,7 @@ const EditProduct : NextPage<WithRouterProps> = ({router}) => {
           setProduct={setProduct}
           onSubmit={onUpdate}
           openDeleteModal={onOpen}
+          router={router}
         />
         <CustomModal 
           type={'delete'}

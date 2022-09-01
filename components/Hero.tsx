@@ -35,9 +35,9 @@ export const Hero : React.FC = () => {
           fontSize={headingFontSize}
           lineHeight={'110%'}>
           The Best<br />
-          <Text as={'span'} bgClip={'text'} bgGradient={useColorModeValue(lightGradient,darkGradient)}>
+          <Heading fontWeight={700} fontSize={headingFontSize} lineHeight={'110%'} textTransform={'full-width'} as={'span'} bgClip={'text'} bgGradient={useColorModeValue(lightGradient,darkGradient)}>
             E-Commerce&nbsp;
-          </Text>
+          </Heading>
           Site.
         </Heading>
         <Text>

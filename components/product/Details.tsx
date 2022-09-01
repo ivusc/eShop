@@ -24,6 +24,7 @@ import { addToCartModalContent, darkGradient, lightGradient } from '../../consta
 import { AuthContext } from '../../context/AuthContext';
 import { CartContext } from '../../context/CartContext';
 import { FontContext } from '../../context/FontContext';
+import { ProductsContext } from '../../context/ProductsContext';
 import { IProduct } from '../../interfaces';
 import { GradientButton } from '../common/GradientButton';
 import { CustomModal } from './CustomModal';
@@ -40,16 +41,28 @@ interface IDetails extends IProduct{
 export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, prodPrice, imageUrl, prodDesc, prodId, prodCategory, prodRating, prodStock, onAdd }) => {
   const { textFontSize } = useContext(FontContext);
   const { currentUser } = useContext(AuthContext);
+  const { updateRating } = useContext(ProductsContext);
   const { isProductBoughtBefore } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [quantity, setQuantity] = useState(1);
   const [bought, setBought] = useState(false);
-  const [rating, setRating] = useState(0);
+  const [totalRating, setTotalRating] = useState(0);
+  const [ratingDone, setRatingDone] = useState(false);
 
   useEffect(()=>{
     const bought = isProductBoughtBefore({prodId: prodId!});
     setBought(bought);
   },[prodId])
+
+  useEffect(()=>{
+    setTotalRating(0);
+    setRatingDone(false)
+    prodRating.forEach((item) => {
+      console.log(item.user)
+      setTotalRating(totalRating => totalRating + item.rating)
+      if (item.user === currentUser?.email) setRatingDone(true);
+    })
+  },[prodRating])
 
   return (
     <Container maxW={'7xl'}>
@@ -61,7 +74,7 @@ export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, pro
           <Box borderRadius={'2xl'} boxShadow={'lg'} overflow={'hidden'} alignItems={'center'} justifyContent=      {'center'} position={'relative'} w={'90%'} h={{ base: '100%', sm: '400px', lg: '500px' }}>
             <Image alt={'product image'} src={imageUrl!} objectFit={'cover'} layout={'fill'}/>
           </Box>
-          {bought && (
+          {((currentUser !== null) && !ratingDone && bought) && (
             <Box mt={4} display={'flex'} flexDir={'column'}>
               <Text textAlign={'center'}>You bought this product before.<br/>Please comment or rate the product.</Text>
               <RatingInput 
@@ -69,7 +82,14 @@ export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, pro
                 scale={5}
                 fillColor="gold"
                 strokeColor="grey"
+                updateRating={updateRating}
+                prodId={prodId!}
               /> 
+            </Box>
+          )}
+          {ratingDone && (
+            <Box mt={4} display={'flex'} flexDir={'column'}>
+              <Text textAlign={'center'}>You have already rated the product before.</Text>
             </Box>
           )}
         </Flex>
@@ -113,7 +133,7 @@ export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, pro
               <Text fontSize={'lg'}>
                 <Text as={chakra.span} fontWeight={'semibold'}>Stock: </Text> {prodStock}
               </Text>
-              <RatingDisplay rating={prodRating} numReviews={0} showNumReviews={true}/>
+              <RatingDisplay rating={totalRating/prodRating.length} numReviews={prodRating.length} showNumReviews={true}/>
             </VStack>
             <Text fontWeight={'semibold'}>Select Quantity:</Text>
             <CustomSlider 

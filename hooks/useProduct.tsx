@@ -18,7 +18,7 @@ export const useProduct = (router:NextRouter) => {
           duration: 5000,
         })
         setProduct({
-          prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: 0, prodStock: 0, prodCategory: '',
+          prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: [], prodStock: 0, prodCategory: '',
         })
         return router.push('/');
       }
@@ -42,7 +42,7 @@ export const useProduct = (router:NextRouter) => {
           duration: 5000,
         })
         setProduct({
-          prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: 0, prodStock: 0, prodCategory: '',
+          prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: [], prodStock: 0, prodCategory: '',
         })
         return router.push('/');
       } else toast({
@@ -59,7 +59,7 @@ export const useProduct = (router:NextRouter) => {
     handleDelete({id: product.prodId!, e}).then(()=>{
       if (success){
         setProduct({
-          prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: 0, prodStock: 0, prodCategory: '',
+          prodName: '', prodDesc: '', prodPrice: 0, imageUrl: '', prodRating: [], prodStock: 0, prodCategory: '',
         })
         toast({
           title: `Deleted!`,

@@ -14,9 +14,12 @@ import { CardMenu } from './CardMenu';
 import { AuthContext } from '../../../context/AuthContext';
 import { RatingDisplay } from '../../product/RatingDisplay';
 
-export const ProductCard : React.FC<IProduct & WithRouterProps> = (
-  {sellerEmail, prodName, prodPrice, imageUrl, prodId, prodRating, router }) => {
-  
+interface IProductCard extends IProduct {
+  prodAvgRating: number
+}
+
+export const ProductCard : React.FC<IProductCard & WithRouterProps> = (
+  {sellerEmail, prodName, prodPrice, imageUrl, prodId, prodAvgRating, router }) => {
   const { currentUser } = useContext(AuthContext);
 
   return (
@@ -46,12 +49,13 @@ export const ProductCard : React.FC<IProduct & WithRouterProps> = (
         }}
         >
         {sellerEmail === currentUser?.email ? (<CardMenu prodId={prodId!} />) : undefined}
-        <Box onClick={()=>{router.push(`/products/${prodId}`)}}>
+        <Box onClick={()=>{router.push(`/product/${prodId}`)}}>
           <Image
             height={230}
             width={'100%'}
             objectFit={'cover'}
             src={imageUrl}
+            
           />
           <Stack pt={10} align={'center'}>
             <Text color={useColorModeValue('gray.500','gray.200')} fontSize={'sm'} textTransform={'uppercase'}>
@@ -65,7 +69,7 @@ export const ProductCard : React.FC<IProduct & WithRouterProps> = (
                 $ {prodPrice}
               </Text>
             </Stack>
-            <RatingDisplay rating={prodRating} showNumReviews={false} />
+            <RatingDisplay rating={prodAvgRating} showNumReviews={false} />
           </Stack>
         </Box>
       </Box>

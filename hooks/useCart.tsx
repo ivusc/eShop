@@ -15,7 +15,7 @@ export const useCart = (router:NextRouter) => {
   const [checkoutItems, setCheckoutItems] = useState<Array<ICartProduct>>([]);
   const { currentUser } = useContext(AuthContext);
 
-  const redirectToInfoPage = (prodId: string) => router.push(`/products/${prodId}`);
+  const redirectToInfoPage = (prodId: string) => router.push(`/product/${prodId}`);
 
   const handleDelete = async ({ cartItemId, prodId, qty }: {cartItemId : string, prodId: string, qty: number}) => {
     updateStock({id: prodId, qty: qty, type: 'add'}).then()
