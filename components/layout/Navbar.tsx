@@ -38,7 +38,7 @@ export const Navbar : React.FC = () => {
             {(currentUser?.role === 'seller') && (
               <>
                 <Text as={Link} href={'/product/create'}>Create Product</Text>
-                <Text as={Link} href={'/product/create'}>View My Products</Text>
+                <Text as={Link} href={`/profile/${currentUser.email}`}>View My Products</Text>
               </>
             )}
           </HStack>

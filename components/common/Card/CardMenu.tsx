@@ -73,6 +73,7 @@ export const CardMenu : React.FC<ICardMenu> = ({ prodId }) => {
           header={deleteModalContent.header}
           description={deleteModalContent.description}
           action={deleteModalContent.action}
+          size={{base: 'md', md: 'xl'}}
         />
     </Menu>
   )

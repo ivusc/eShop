@@ -77,7 +77,7 @@ export const RatingInput = React.forwardRef(
     return (
       <form onSubmit={(e)=>updateRating({id: prodId,comment: rating.comment, rating: rating.rating, e})}>
         <Box display={'flex'} flexDir={'column'} alignItems={'center'}>
-          <Textarea width={'90%'} mt={8} placeholder={'Enter comment'} onChange={(e)=> setRating({...rating, comment: e.target.value})}/>
+          <Textarea width={{base: 'full', md: '180%'}} mt={8} placeholder={'Enter comment'} onChange={(e)=> setRating({...rating, comment: e.target.value})}/>
         </Box>
         <Stack isInline mt={4} mb={1} justify="center">
           <input name="rating" type="hidden" value={rating.rating}/>

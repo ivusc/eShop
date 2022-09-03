@@ -10,7 +10,7 @@ interface IStatus{
 }
 
 export const useAuth = (router: NextRouter) => {
-  const { login, signup } = useContext(AuthContext);
+  const { login, signup, logout } = useContext(AuthContext);
   const toast = useToast();
   const [credentials, setCredentials] = useState<IAuthFormUser>({
     email: '', password: '', confirmPassword: '',
@@ -107,10 +107,24 @@ export const useAuth = (router: NextRouter) => {
     return true;
   }
 
+  const handleLogout = async () => {
+    setStatus({...status, error: ''})
+    try{
+      await logout();
+    } catch(err){
+      setStatus({...status, error: 'Failed to logout'});
+      toast({
+        title: `Failed to logout`,
+        status: 'error',
+        isClosable: true,
+      })
+    }
+  } 
+
   const changeTab = (index: number) => setTabIndex(index)
 
   return {
     tabIndex, setTabIndex, credentials, setCredentials, status, setStatus,
-    handleLogin, handleSignup, handleKeyPress, changeTab
+    handleLogin, handleSignup, handleKeyPress, changeTab, handleLogout
   }
 }

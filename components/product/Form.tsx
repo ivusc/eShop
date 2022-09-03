@@ -3,7 +3,7 @@ import { NextRouter } from 'next/router'
 import React from 'react'
 import { Categories, darkGradient, lightGradient } from '../../constants'
 import { IProduct } from '../../interfaces'
-import FileInput from '../common/FileInput'
+import { FileInput } from '../common/FileInput'
 import { GradientButton } from '../common/GradientButton'
 
 interface IForm{
@@ -22,7 +22,7 @@ export const Form : React.FC<IForm> = ({ type, onSubmit, openDeleteModal, produc
       {type === 'create' && (
         <FormControl isRequired>
           <FormLabel>Product Picture</FormLabel>
-          <FileInput />
+          <FileInput type={'product'}/>
         </FormControl>
       )}
       <FormControl isRequired>
@@ -36,7 +36,7 @@ export const Form : React.FC<IForm> = ({ type, onSubmit, openDeleteModal, produc
       <FormControl isRequired>
         <FormLabel>Product Price</FormLabel>
         <InputGroup>
-          <InputLeftAddon children={'USD'} />
+          <InputLeftAddon children={'SGD'} />
           <Input value={type === 'update' ? product.prodPrice : undefined} placeholder='Enter amount' onChange={(e) => setProduct({...product, prodPrice: Number(e.target.value)})}/>
         </InputGroup>
       </FormControl>

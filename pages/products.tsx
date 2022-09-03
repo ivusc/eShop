@@ -1,9 +1,9 @@
-import { Container, Flex, FormLabel, Heading, HStack, Input, SimpleGrid, useColorModeValue, useDisclosure, VStack } from '@chakra-ui/react'
+import { Container, Flex, FormLabel, Heading, HStack, Input, SimpleGrid, Stack, useColorModeValue, useDisclosure, VStack } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import { WithRouterProps } from 'next/dist/client/with-router'
 import { withRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
-import { AnimatedHeading, CustomModal, GradientButton, ProductCard, Section } from '../components'
+import { AnimatedHeading, CustomModal, GradientButton, ProductCard, ProductGrid, Section } from '../components'
 import { darkGradient, lightGradient } from '../constants'
 import { FontContext } from '../context/FontContext'
 import { ProductsContext } from '../context/ProductsContext'
@@ -71,33 +71,16 @@ const Products : NextPage<WithRouterProps> = ({router}) => {
           fontWeight={'extrabold'}
           mt={'0.5em'}
         >All Products</Heading>
-        <HStack spacing={5} justifyContent={'center'} alignItems={'center'} mt={'2em'}>
-          <Input placeholder='Search for products...' size={'lg'} width={'75%'} onChange={(e) => setSearchQuery(e.target.value)}  onKeyDown={handleKeyPress}/>
+        <Stack direction={{base: 'column', md: 'row'}} spacing={5} mb={'2em'} justifyContent={'center'} alignItems={'center'} mt={'2em'}>
+          <Input placeholder='Search for products...' size={'lg'} width={{base:'95%', md:'50%'}} onChange={(e) => setSearchQuery(e.target.value)}  onKeyDown={handleKeyPress}/>
           <GradientButton buttonType='green' size={'lg'} onClick={searchQuery === '' ? onOpen : ()=>handleSubmitQuery()}>
             {searchQuery !== '' ? 'Search' : 'Filter'}
           </GradientButton>
-        </HStack>
-        <SimpleGrid columns={{ base: 1, mdsm: 2, md: 3, lg: 4, xl: 5}} alignItems={'center'} spacing={4} mt={{base: 2, md: '3em'}}>
-        {productsCopy.map((product) => {
-          const avgRating = calcAvgRating(product.prodRating);
-          return(
-            <ProductCard 
-              router={router}
-              prodCategory={product.prodCategory}
-              prodName={product.prodName} 
-              prodPrice={product.prodPrice} 
-              imageUrl={product.imageUrl} 
-              prodId={product.prodId!} 
-              prodDesc={product.prodDesc}
-              prodRating={product.prodRating}
-              prodStock={product.prodStock}
-              prodAvgRating={avgRating}
-              sellerEmail={product.sellerEmail}
-              key={product.prodId}
-            />
-            )
-          })}
-        </SimpleGrid>
+        </Stack>
+        <ProductGrid
+          products={productsCopy}
+          router={router}
+        />
         {(productsCopy.length === 0) && (
           <VStack>
             <AnimatedHeading>No products found.</AnimatedHeading>
@@ -114,7 +97,7 @@ const Products : NextPage<WithRouterProps> = ({router}) => {
         action={'Filter'}
         selectedCategories={selectedCategories}
         setSelectedCategory={setSelectedCategories}
-        size={'xl'}
+        size={{base: 'md', md: 'xl'}}
         />
     </Section>
   )

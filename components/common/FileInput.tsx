@@ -10,13 +10,20 @@ import {
 } from '@chakra-ui/react';
 import { useDropzone } from 'react-dropzone';
 import { ProductsContext } from '../../context/ProductsContext';
+import { AuthContext } from '../../context/AuthContext';
 
-const FileInput : React.FC = () => {
+interface IFileInput{
+  type: 'product' | 'user';
+}
+
+export const FileInput : React.FC<IFileInput> = ({ type }) => {
   const { submitImg } = useContext(ProductsContext);
+  const { updateProfileImg } = useContext(AuthContext);
 
   const onDrop = useCallback(
     async (acceptedFile : Array<File>) => {
-      submitImg(acceptedFile[0]);
+      if(type === 'product') submitImg(acceptedFile[0]);
+      else if (type === 'user') updateProfileImg(acceptedFile[0]);
     },
     [],
   )
@@ -37,6 +44,7 @@ const FileInput : React.FC = () => {
     pt={5}
     pb={6}
     borderWidth={2}
+    width={'full'}
     height={'15em'}
     _dark={{
       color: "gray.500",
@@ -114,5 +122,3 @@ const FileInput : React.FC = () => {
   </Flex>
   )
 }
-
-export default FileInput

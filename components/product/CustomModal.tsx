@@ -10,7 +10,10 @@ interface IModal extends IModalContent{
   prodName?: string;
   prodPrice?: number;
   selectedCategories?: string[];
-  size?: string;
+  size?: {
+    base: string,
+    md: string,
+  };
   setSelectedCategory?: React.Dispatch<React.SetStateAction<string[]>>;
   onClose: ()=>void;
   onAction: (e:any) => void;

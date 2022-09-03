@@ -5,7 +5,7 @@ import { ProductsProvider } from '../context/ProductsContext'
 import { ChakraProvider, ColorModeScript, Container } from '@chakra-ui/react'
 import { theme } from '../lib/theme'
 import { FontProvider } from '../context/FontContext'
-import { Navbar } from '../components'
+import { Footer, Navbar } from '../components'
 import { Fonts } from '../lib/fonts'
 import { AnimatePresence } from 'framer-motion'
 import { AuthProvider } from '../context/AuthContext'
@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 </Head>
 
                 <main>
-                  <Navbar />
+                  <Navbar router={router} />
                   <AnimatePresence
                     exitBeforeEnter
                     initial={true}
@@ -43,6 +43,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 </main>
 
                 <footer>
+                  <Footer />
                 </footer>
                 </CartProvider>
             </ProductsProvider>

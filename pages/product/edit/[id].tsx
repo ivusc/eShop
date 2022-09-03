@@ -62,6 +62,7 @@ const EditProduct : NextPage<WithRouterProps> = ({router}) => {
           header={deleteModalContent.header}
           description={deleteModalContent.description}
           action={deleteModalContent.action}
+          size={{base: 'md', md: 'xl'}}
         />
       </Container>
     </Section>

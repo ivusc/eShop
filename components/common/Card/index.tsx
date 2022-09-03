@@ -61,7 +61,7 @@ export const ProductCard : React.FC<IProductCard & WithRouterProps> = (
             <Text color={useColorModeValue('gray.500','gray.200')} fontSize={'sm'} textTransform={'uppercase'}>
               {sellerEmail}
             </Text>
-            <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+            <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500} noOfLines={1} textAlign={'center'}> 
             {prodName}
             </Heading>
             <Stack direction={'row'} align={'center'}>

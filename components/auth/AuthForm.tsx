@@ -23,7 +23,7 @@ export interface IAuthFormUser{
 
 export const AuthForm : React.FC<IAuthForm> = ({ type, credentials, handleKeyPress, setCredentials, handleSubmit }) => (
   <form onSubmit={(e) => handleSubmit(e)}>
-    <Stack spacing={4}>
+    <Stack spacing={5} mt={'1em'} width={'full'}>
       <FormControl id="email">
         <FormLabel>Email address</FormLabel>
         <Input type="email" value={credentials.email} onKeyDown={(e) => handleKeyPress({event: e, type: type})} onChange={(e)=>setCredentials({...credentials, email: e.target.value})}/>

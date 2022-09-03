@@ -15,6 +15,8 @@ import {
   useDisclosure,
   HStack,
   Icon,
+  Hide,
+  Divider,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import { NextRouter } from 'next/router';
@@ -25,7 +27,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { CartContext } from '../../context/CartContext';
 import { FontContext } from '../../context/FontContext';
 import { ProductsContext } from '../../context/ProductsContext';
-import { IProduct } from '../../interfaces';
+import { IProduct, IUser } from '../../interfaces';
 import { GradientButton } from '../common/GradientButton';
 import { CustomModal } from './CustomModal';
 import { CustomSlider } from './CustomSlider';
@@ -65,33 +67,24 @@ export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, pro
   },[prodRating])
 
   return (
-    <Container maxW={'7xl'}>
+    <Container maxW={{base: '90%', md: '80%'}}>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
-        spacing={{ base: 8, md: 2 }}
+        spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 12 }}>
-        <Flex direction={'column'}> 
-          <Box borderRadius={'2xl'} boxShadow={'lg'} overflow={'hidden'} alignItems={'center'} justifyContent=      {'center'} position={'relative'} w={'90%'} h={{ base: '100%', sm: '400px', lg: '500px' }}>
+        <Flex direction={'column'} justifyContent={{base: 'center', md:'start'}} alignItems={'center'}> 
+          <Box borderRadius={'2xl'} boxShadow={'lg'} overflow={'hidden'} alignItems={'center'} justifyContent= {'center'} position={'relative'} w={'90%'} h={{ base: '350', sm: '400px', lg: '500px' }}>
             <Image alt={'product image'} src={imageUrl!} objectFit={'cover'} layout={'fill'}/>
           </Box>
-          {((currentUser !== null) && !ratingDone && bought) && (
-            <Box mt={4} display={'flex'} flexDir={'column'}>
-              <Text textAlign={'center'}>You bought this product before.<br/>Please comment or rate the product.</Text>
-              <RatingInput 
-                size={28}
-                scale={5}
-                fillColor="gold"
-                strokeColor="grey"
-                updateRating={updateRating}
-                prodId={prodId!}
-              /> 
-            </Box>
-          )}
-          {ratingDone && (
-            <Box mt={4} display={'flex'} flexDir={'column'}>
-              <Text textAlign={'center'}>You have already rated the product before.</Text>
-            </Box>
-          )}
+          <Hide below={'mdsm'}>
+            <CommentSection 
+              currentUser={currentUser}
+              ratingDone={ratingDone}
+              bought={bought}
+              updateRating={updateRating}
+              prodId={prodId}
+            />
+          </Hide>
         </Flex>
         
         <VStack spacing={{ base: 6, md: 10 }} alignItems={'left'}>
@@ -112,7 +105,7 @@ export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, pro
             <VStack spacing={{ base: 4, sm: 6 }} display={'flex'} flexDir={'column'} alignItems={'left'}>
               <Badge 
                 borderRadius={'md'}
-                width={'20%'}
+                width={{base: '30%', md: '20%'}}
                 py={2}
                 color={useColorModeValue('gray.200','gray.900')}
                 textAlign={'center'} 
@@ -156,7 +149,17 @@ export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, pro
             <MdLocalShipping />
             <Text>2-3 business days delivery</Text>
           </HStack>
-          </VStack>
+          <Hide above={'mdsm'}>
+            <Divider height={'2px'} bgGradient={useColorModeValue(lightGradient, darkGradient)} />
+            <CommentSection 
+              currentUser={currentUser}
+              ratingDone={ratingDone}
+              bought={bought}
+              updateRating={updateRating}
+              prodId={prodId}
+            />
+          </Hide>
+        </VStack>
 
         <CustomModal 
           isOpen={isOpen} 
@@ -169,8 +172,45 @@ export const Details : React.FC<IDetails> = ({router, sellerEmail, prodName, pro
           qty={quantity}
           prodName={prodName}
           prodPrice={prodPrice}
+          size={{base: 'md', md: 'xl'}}
         />
       </SimpleGrid>
     </Container>
   );
 }
+
+interface ICommentSection{
+  currentUser: IUser | null | undefined;
+  ratingDone: boolean;
+  bought: boolean;
+  updateRating: ({ id, rating, comment, e }: {
+    id: string;
+    rating: number;
+    comment: string;
+    e: any;
+  }) => Promise<void>;
+  prodId: string | undefined;
+}
+
+const CommentSection : React.FC<ICommentSection> = ({ currentUser, ratingDone, bought, updateRating, prodId }) => (
+  <>
+    {((currentUser !== null) && !ratingDone && bought) && (
+      <Box mt={4} display={'flex'} flexDir={'column'}>
+        <Text textAlign={'center'}>You bought this product before.<br/>Please comment or rate the product.</Text>
+        <RatingInput 
+          size={28}
+          scale={5}
+          fillColor="gold"
+          strokeColor="grey"
+          updateRating={updateRating}
+          prodId={prodId!}
+        /> 
+      </Box>
+    )}
+    {ratingDone && (
+      <Box mt={4} display={'flex'} flexDir={'column'}>
+        <Text textAlign={'center'}>You have already rated the product before.</Text>
+      </Box>
+    )}
+  </>
+)

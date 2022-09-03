@@ -5,7 +5,8 @@ import {
   Button,
   Stack,
   chakra,
-  useColorModeValue
+  useColorModeValue,
+  Icon
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import Image from 'next/image';
@@ -14,10 +15,15 @@ import { darkGradient, lightGradient } from '../constants';
 import { FontContext } from '../context/FontContext';
 import HeroSvg from '../assets/hero.svg';
 import { GradientButton } from './common/GradientButton';
+import Link from 'next/link';
+import { AuthContext } from '../context/AuthContext';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 
 
 export const Hero : React.FC = () => {
   const { headingFontSize } = useContext(FontContext);
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <>
       <Stack
@@ -25,8 +31,8 @@ export const Hero : React.FC = () => {
         textAlign={'center'}
         alignItems={'center'}
         spacing={{ base: 8, md: 14 }}
-        py={{ base: 20, md: 10 }}>
-        <Box width={'30vw'} height={'30vh'} position={'relative'} overflow={'hidden'} borderRadius={'2xl'}>
+        py={10}>
+        <Box width={{ base: '80vw', md: '30vw'}} height={{ base: '80vw', md: '30vh' }} position={'relative'} overflow={'hidden'} borderRadius={'2xl'}>
           <Image src={HeroSvg} layout='fill' objectFit='contain'/>
         </Box>
         <Heading
@@ -40,7 +46,7 @@ export const Hero : React.FC = () => {
           </Heading>
           Site.
         </Heading>
-        <Text>
+        <Text width={'90%'}>
           The most unified ecommerce platform for order management and recurring billing
           to lasting customer bonds.
         </Text>
@@ -50,15 +56,15 @@ export const Hero : React.FC = () => {
           align={'center'}
           alignSelf={'center'}
           position={'relative'}>
-          <chakra.a href={'#prods'}>
+          <Link href={!currentUser ? '/auth' : '/products'}>
             <GradientButton
               buttonType={'green'}
-              px={10}
-              py={4}
+              size={'lg'}
             >
-              Start Shopping &gt;
+              {!currentUser ? 'Login' : 'Start Shopping'} &nbsp;
+              <Icon as={ChevronRightIcon} fontSize={20} />
             </GradientButton>
-          </chakra.a>
+          </Link>
           <Button variant={'link'} colorScheme={'green'} size={'sm'}>
             Learn more
           </Button>

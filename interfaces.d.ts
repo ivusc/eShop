@@ -58,10 +58,11 @@ export interface IModalContent{
 
 export interface ICustomIconButton{
   icon: JSX.Element;
-  lightGradient: string;
-  darkGradient: string;
-  hoverLightGradient: string;
-  hoverDarkGradient: string;
+  lightGradient?: string;
+  darkGradient?: string;
+  hoverLightGradient?: string;
+  hoverDarkGradient?: string;
+  variant?: string;
   lightColor: string;
   darkColor: string;
   ariaLabel: string;

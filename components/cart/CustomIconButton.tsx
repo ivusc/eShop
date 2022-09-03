@@ -8,12 +8,13 @@ interface ICustomButtonEvent extends ICustomIconButton{
 }
 
 export const CustomIconButton : React.FC<ICustomButtonEvent> = ({
-  icon, lightGradient, darkGradient, hoverLightGradient, hoverDarkGradient, lightColor, darkColor, ariaLabel, onAction
+  variant, icon, lightGradient, darkGradient, hoverLightGradient, hoverDarkGradient, lightColor, darkColor, ariaLabel, onAction
 }) => {
 
   return (
     <IconButton icon={icon} aria-label={ariaLabel} size={'lg'}
       rounded={'lg'}
+      variant={variant}
       color={useColorModeValue(lightColor,darkColor)}
       bgGradient={useColorModeValue(lightGradient,darkGradient)}
       _hover={{
