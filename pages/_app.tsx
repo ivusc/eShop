@@ -17,7 +17,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <ChakraProvider theme={theme}>
         <Fonts/>
         <FontProvider>
-          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <AuthProvider>
             <ProductsProvider>
               <CartProvider>
