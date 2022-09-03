@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, HStack, Input, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Switch, Textarea, useColorModeValue, VStack } from '@chakra-ui/react'
+import { FormControl, FormLabel, Hide, HStack, Input, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Switch, Textarea, useColorModeValue, VStack } from '@chakra-ui/react'
 import { NextRouter } from 'next/router'
 import React from 'react'
 import { Categories, darkGradient, lightGradient } from '../../constants'
@@ -69,14 +69,49 @@ export const Form : React.FC<IForm> = ({ type, onSubmit, openDeleteModal, produc
           <Switch colorScheme='green' size='lg' onChange={(e)=>setProduct({...product, discount: e.target.checked})}/>
         </HStack>
       </FormControl>
-      <HStack spacing={5}>
-        {type === 'update' && ( 
-          <GradientButton size={'lg'} buttonType={'red'} onClick={openDeleteModal}>Delete</GradientButton>
-        )}
-        <GradientButton size={'lg'} buttonType={'orange'} onClick={()=>router.push('/')}>Cancel</GradientButton>
-        <GradientButton type='submit' size={'lg'} buttonType={'green'} >Submit</GradientButton>
-      </HStack>
+        <Hide below={'mdsm'}>
+          <MdContent 
+            openDeleteModal={openDeleteModal}
+            router={router}
+            type={type}
+          />
+        </Hide>
+        <Hide above={'mdsm'}>
+            <SmContent
+              openDeleteModal={openDeleteModal}
+              router={router}
+              type={type}
+            />
+        </Hide>
       </VStack>
     </form>
   )
 }
+
+interface IContent {
+  openDeleteModal: (() => void) | undefined;
+  router: NextRouter;
+  type: "create" | "update"
+}
+
+const MdContent : React.FC<IContent> = ({ openDeleteModal, router, type}) => (
+  <HStack spacing={4}>
+    {type === 'update' && ( 
+      <GradientButton size={'lg'} buttonType={'red'} onClick={openDeleteModal}>Delete</GradientButton>
+    )}
+    <GradientButton size={'lg'} buttonType={'orange'} onClick={()=>router.push('/')}>Cancel</GradientButton>
+    <GradientButton type='submit' size={'lg'} buttonType={'green'} >Submit</GradientButton>
+  </HStack>
+)
+
+const SmContent : React.FC<IContent> = ({ openDeleteModal, router, type }) => (
+  <VStack spacing={4}>
+    <HStack spacing={4}>
+      {type === 'update' && ( 
+        <GradientButton buttonType={'red'} onClick={openDeleteModal}>Delete</GradientButton>
+      )}
+      <GradientButton buttonType={'orange'} onClick={()=>router.push('/')}>Cancel</GradientButton>
+    </HStack>
+    <GradientButton type='submit' buttonType={'green'} >Submit</GradientButton>
+  </VStack>
+)

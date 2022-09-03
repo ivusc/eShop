@@ -21,10 +21,11 @@ interface ILogo {
   fontLg?: string;
   fontFamily: string;
   fontWeight?: string;
+  hoverGradient?: boolean;
   onClose?: () => void;
 }
 
-export const Logo: React.FC<ILogo> = ({plBase, pyBase, pxBase, pyMd, plMd, fontSm, fontMd, fontLg, fontFamily, fontWeight='semibold', onClose}:ILogo) => (
+export const Logo: React.FC<ILogo> = ({plBase, pyBase, pxBase, pyMd, plMd, fontSm, fontMd, fontLg, fontFamily, fontWeight='semibold', hoverGradient=false, onClose}:ILogo) => (
   <Link href={'/'}>
     <Box 
       display={'flex'}
@@ -38,12 +39,13 @@ export const Logo: React.FC<ILogo> = ({plBase, pyBase, pxBase, pyMd, plMd, fontS
       pr={1}
       justifyContent={'center'}
       alignItems={'center'}
+      userSelect={'none'}
       _hover={{ 
         textDecoration: 'none',
         cursor: 'pointer',
-        bgGradient:useColorModeValue(lightGradient,darkGradient),
+        bgGradient: hoverGradient === true ? useColorModeValue(lightGradient, darkGradient) : undefined,
       }}>
-      <Box w={8} h={8} mr={1}>
+      <Box w={8} h={8} mr={1} userSelect={'none'}>
         <Image src={logo}/>
       </Box>
       {/* <Box display={{base:'inherit', md:'inherit'}} minW={{base: 'full', md:'fit-content'}}> */}
@@ -57,7 +59,8 @@ export const Logo: React.FC<ILogo> = ({plBase, pyBase, pxBase, pyMd, plMd, fontS
           fontWeight={fontWeight}
           noOfLines={1}
           textDecoration={'unset'}
-          color={useColorModeValue('gray.800', 'white')}>
+          color={useColorModeValue('gray.800','white')}
+        >
           eShop
         </Text>
       {/* </Box> */}

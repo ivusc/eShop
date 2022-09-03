@@ -71,13 +71,13 @@ const Cart : NextPage<WithRouterProps> = ({ router }) => {
                         </Text> 
                       }
                     </GridItem>
-                    <GridItem colSpan={{base: 2, md: 2}} display={'flex'} flexDir={'row'} alignItems={'center'} justifyContent={'center'}>
+                    <GridItem colSpan={{base: 1, md: 2}} display={'flex'} flexDir={'row'} alignItems={'center'} justifyContent={'center'}>
                       <Stat textAlign={'center'}>
-                        <StatLabel>Quantity</StatLabel>
+                        <StatLabel display={{base:'none', md: 'flex'}}>Quantity</StatLabel>
                         <StatNumber fontSize={titleFontSize}>{cartItem.quantity}</StatNumber>
                       </Stat>
                     </GridItem>
-                    <GridItem colSpan={{base: 2, md: 2}} display={'flex'} flexDir={'row'} justifyContent={{base: 'center', md:'end'}} alignItems={'center'}>
+                    <GridItem colSpan={{base: 3, md: 2}} display={'flex'} flexDir={'row'} justifyContent={{base: 'start', md:'end'}} alignItems={'center'}>
                       <Hide below={'md'}>
                         <MdButtonContent
                           products={products}

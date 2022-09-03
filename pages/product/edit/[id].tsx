@@ -38,8 +38,8 @@ const EditProduct : NextPage<WithRouterProps> = ({router}) => {
             overflow={'hidden'} 
             alignItems={'center'} 
             position={'relative'} 
-            w={'80%'} 
-            h={{ base: '100%', sm: '400px', lg: '500px' }}
+            w={{base: 'full', md: '80%'}} 
+            h={{ base: '300px', sm: '400px', lg: '500px' }}
             mb={'3em'}
             >
             <Image alt={'product image'} src={product.imageUrl!} objectFit={'contain'} layout={'fill'}/>

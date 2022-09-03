@@ -65,9 +65,9 @@ export const Hero : React.FC = () => {
               <Icon as={ChevronRightIcon} fontSize={20} />
             </GradientButton>
           </Link>
-          <Button variant={'link'} colorScheme={'green'} size={'sm'}>
+          {/* <Button variant={'link'} colorScheme={'green'} size={'sm'}>
             Learn more
-          </Button>
+          </Button> */}
         </Stack>
       </Stack>
     </>

@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box, Container, Flex, Heading, SimpleGrid, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import type { NextPage } from 'next'
 import { useContext, useEffect, useState } from 'react';
 import { GradientButton, Hero, ProductCard, Section } from '../components';
@@ -18,10 +18,16 @@ const Home: NextPage<WithRouterProps> = ({router}) => {
 
   return (
     <Section delay={0.1}>
-      <Text textAlign={'center'}>Logged in as {currentUser?.email}</Text>
+      <Container maxW={{base: '90%', md: '50%'}}>
+        {currentUser && (
+          <Alert status='success' variant='top-accent' alignSelf={'center'} justifySelf={'center'}>
+            <AlertIcon />
+            Logged in as: {currentUser.email}
+          </Alert>
+        )}
+      </Container>
       <Hero />
       <Heading 
-        id={'prods'}
         textAlign={'center'} 
         bgClip={'text'} 
         bgGradient={useColorModeValue(lightGradient,darkGradient)} 
