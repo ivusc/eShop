@@ -1,6 +1,6 @@
 # eShop
 
-![eShop](https://firebasestorage.googleapis.com/v0/b/crix-shop.appspot.com/o/eshop-landing.png?alt=media&token=840faafe-81d3-4d29-a7db-0c42ab455c3c)
+![eShop](https://firebasestorage.googleapis.com/v0/b/crix-shop.appspot.com/o/eshop-landing.png?alt=media&token=5c8ee1f6-2c2b-4cea-86bb-24ca2af90a18)
 
 ## About the Project
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
