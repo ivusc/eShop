@@ -1,4 +1,4 @@
-import { BsTrashFill } from "react-icons/bs";
+import { BsFillBagPlusFill, BsTrashFill } from "react-icons/bs";
 import { FaEdit, FaInfoCircle, FaShoppingCart, FaUser } from "react-icons/fa";
 import { HiOutlineLogin } from "react-icons/hi";
 import { ICustomIconButton, IModalContent } from "../interfaces";
@@ -83,13 +83,14 @@ interface INavLink {
 
 interface INavMenu extends INavLink{
   icon: JSX.Element;
-  type: 'nav' | 'auth';
+  type: 'nav' | 'auth' | 'nav-products-create';
 }
 
 export const navMenu : Array<INavMenu> = [
   { href: '/auth', icon: <HiOutlineLogin size={20}/>, ariaLabel: 'Login', type: 'auth'},
   { href: '/profile/', icon: <FaUser size={20}/>, ariaLabel: 'Profile', type: 'nav' },
   { href: '/cart/', icon: <FaShoppingCart size={20}/>, ariaLabel: 'Cart', type: 'nav' },
+  { href: '/product/create', icon: <BsFillBagPlusFill size={20}/>, ariaLabel: 'Create Products', type: 'nav-products-create'},
 ]
 
 export const navItem : Array<INavLink> = [

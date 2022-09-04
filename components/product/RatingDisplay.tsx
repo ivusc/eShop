@@ -31,8 +31,8 @@ export const RatingDisplay : React.FC<IRatingDisplay> = ({ rating, numReviews, s
         })}
       {showNumReviews && (
         <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {numReviews!} review{numReviews! > 1 && 's'} | &nbsp;
-          {Math.round(rating)} /10
+          {numReviews!} review{numReviews! > 1 && 's'} 
+          {numReviews !== 0 && ( ` | ${Math.round(rating)} /10` )}
         </Box>
       )}
     </Box>

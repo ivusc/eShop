@@ -119,6 +119,7 @@ export const useAuth = (router: NextRouter) => {
         isClosable: true,
       })
     }
+    router.push('/')
   } 
 
   const changeTab = (index: number) => setTabIndex(index)

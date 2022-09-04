@@ -7,7 +7,8 @@ import {
    Collapse,
    useColorModeValue,
    useDisclosure,
-   Tooltip
+   Tooltip,
+   Text
  } from '@chakra-ui/react';
  import {
    HamburgerIcon,
@@ -22,6 +23,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { darkGradient, hoverDarkGradient, hoverLightGradient, lightGradient, navMenu } from '../../constants';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { useAuth } from '../../hooks';
+import { BsFillBagPlusFill } from 'react-icons/bs';
  
 export const Navbar: React.FC<WithRouterProps> = ({router}) => {
   const { isOpen: mobileNavOpen, onToggle: toggleMobileNav } = useDisclosure();
@@ -41,7 +43,7 @@ export const Navbar: React.FC<WithRouterProps> = ({router}) => {
          align={{base:'left', md:'center'}}>
          <Flex ml={{ base: '2em', mdsm: '2em', md: 0 }} flex={{ base: 1 }} justify={{base:'start', md: 'center'}}>
           <Logo hoverGradient={true} plBase={2} plMd={2} pyMd={2} pyBase={1} fontFamily={'heading'} fontSm={'lg'} fontMd={'xl'} fontLg={'2xl'}/>
-           <Flex pt={{base: 0, md: 3}} display={{base: 'none', md:'flex'}} flex={{base:0, md:1}} justify={{base: 'center', md:'end'}} ml={10} px={{base:0, md:2}}>
+           <Flex pt={{base: 0, md: 2}} display={{base: 'none', md:'flex'}} flex={{base:0, md:1}} justify={{base: 'center', md:'end'}} ml={10} px={{base:0, md:2}}>
              <DesktopNav />
            </Flex>
          </Flex>
@@ -83,11 +85,15 @@ export const Navbar: React.FC<WithRouterProps> = ({router}) => {
             ) : (
               <>
               {navMenu.map((item) => {
+                let href = '#';
                 if (item.type === 'auth') return;
+                else if ((currentUser.role === 'seller') && (item.type === 'nav-products-create')) href = item.href;
+                else if (item.type === 'nav') href = item.href + currentUser.email;
+                else return;
                 return (
                   <Tooltip hasArrow key={item.ariaLabel} label={item.ariaLabel} bg={useColorModeValue('gray.50', 'gray.700')} color={useColorModeValue('gray.900','white')}>
                     <span>
-                    <Link href={`${item.href}${currentUser.email}`}>
+                    <Link href={href}>
                       <IconButton 
                         icon={item.icon} 
                         aria-label={item.ariaLabel}
@@ -135,7 +141,6 @@ export const Navbar: React.FC<WithRouterProps> = ({router}) => {
  
    return (
      <Stack direction={'row'} spacing={4}>
-      
      </Stack>
    );
  };

@@ -66,7 +66,8 @@ export const Form : React.FC<IForm> = ({ type, onSubmit, openDeleteModal, produc
       <FormControl>
         <HStack>
           <FormLabel>Product on discount?</FormLabel>
-          <Switch colorScheme='green' size='lg' onChange={(e)=>setProduct({...product, discount: e.target.checked})}/>
+          <Switch defaultChecked={product.discount === true ? true : false} 
+            colorScheme='green' size='lg' onChange={(e)=>setProduct({...product, discount: e.target.checked})}/>
         </HStack>
       </FormControl>
         <Hide below={'mdsm'}>
