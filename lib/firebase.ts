@@ -8,8 +8,9 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAP2zDuKDvzpCNX-TSVYgj5AqH87jFqH58",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "crix-shop.firebaseapp.com",
   projectId: "crix-shop",
   storageBucket: "crix-shop.appspot.com",
