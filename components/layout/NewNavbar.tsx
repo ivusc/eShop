@@ -8,12 +8,11 @@ import {
    useColorModeValue,
    useDisclosure,
    Tooltip,
-   Text
  } from '@chakra-ui/react';
- import {
+import {
    HamburgerIcon,
    CloseIcon,
- } from '@chakra-ui/icons';
+} from '@chakra-ui/icons';
 import { Logo } from './Logo';
 import { ThemeButton } from './ThemeButton';
 import Link from 'next/link';
@@ -23,7 +22,6 @@ import { AuthContext } from '../../context/AuthContext';
 import { darkGradient, hoverDarkGradient, hoverLightGradient, lightGradient, navMenu } from '../../constants';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { useAuth } from '../../hooks';
-import { BsFillBagPlusFill } from 'react-icons/bs';
  
 export const Navbar: React.FC<WithRouterProps> = ({router}) => {
   const { isOpen: mobileNavOpen, onToggle: toggleMobileNav } = useDisclosure();
@@ -86,7 +84,7 @@ export const Navbar: React.FC<WithRouterProps> = ({router}) => {
               <>
               {navMenu.map((item) => {
                 let href = '#';
-                if (item.type === 'auth') return;
+                if (item.type === 'nav' && item.ariaLabel === 'Login') return;
                 else if ((currentUser.role === 'seller') && (item.type === 'nav-products-create')) href = item.href;
                 else if (item.type === 'nav') href = item.href + currentUser.email;
                 else return;

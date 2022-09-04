@@ -87,7 +87,7 @@ interface INavMenu extends INavLink{
 }
 
 export const navMenu : Array<INavMenu> = [
-  { href: '/auth', icon: <HiOutlineLogin size={20}/>, ariaLabel: 'Login', type: 'auth'},
+  { href: '/auth', icon: <HiOutlineLogin size={20}/>, ariaLabel: 'Login', type: 'nav'},
   { href: '/profile/', icon: <FaUser size={20}/>, ariaLabel: 'Profile', type: 'nav' },
   { href: '/cart/', icon: <FaShoppingCart size={20}/>, ariaLabel: 'Cart', type: 'nav' },
   { href: '/product/create', icon: <BsFillBagPlusFill size={20}/>, ariaLabel: 'Create Products', type: 'nav-products-create'},

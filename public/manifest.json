@@ -9,7 +9,7 @@
     "description": "ecommerce shopping app",
     "icons": [
         {
-            "src": "/icon-192x192.png",
+            "src": "/icon-192x192-bg.png",
             "sizes": "192x192",
             "type": "image/png"
         },

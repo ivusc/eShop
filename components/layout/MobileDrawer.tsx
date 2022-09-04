@@ -36,7 +36,7 @@ interface IMobileNavItems {
   onClose: () => void;
   handleLogout: () => Promise<void>;
   icon: JSX.Element;
-  type: 'nav' | 'auth';
+  type: 'nav' | 'auth' | 'nav-products-create';
 }
 
 export const MobileDrawer: React.FC<IMobileDrawer> = ({mobileNavOpen, toggleMobileNav, btnRef, router}) => {
@@ -91,36 +91,40 @@ export const MobileDrawer: React.FC<IMobileDrawer> = ({mobileNavOpen, toggleMobi
                   handleLogout={handleLogout}
                 />
                 {navMenu.map((item) => {
-                  if ((!currentUser) && (item.type === 'auth')){
-                    console.log('here')
-                    return <MobileNavItem 
-                      href={item.href}
+                  let href = '#';
+                  if (item.type === 'nav') href = item.href + currentUser?.email
+                  else if (item.type === 'nav-products-create') href = '/product/create'
+
+                  if (!currentUser && item.ariaLabel === 'Login') {
+                      return <MobileNavItem 
+                      href={'/auth'}
                       icon={item.icon}
                       label={item.ariaLabel}
                       onClose={toggleMobileNav}
                       type={item.type}
                       handleLogout={handleLogout}
                     />
-                  } else if (item.type === 'nav' && (currentUser)) {
+                  } else if (currentUser && item.ariaLabel !== 'Login') {
                     return <MobileNavItem 
-                    href={`${item.href}${currentUser?.email}`}
+                    href={href}
                     icon={item.icon}
                     label={item.ariaLabel}
                     onClose={toggleMobileNav}
                     type={item.type}
                     handleLogout={handleLogout}
                   />
+                  
                   }
                 })}
                 {currentUser && (
                   <MobileNavItem 
-                  href={'/'}
-                  icon={<HiOutlineLogout size={20}/>}
-                  label={'Logout'}
-                  type={'auth'}
-                  onClose={toggleMobileNav}
-                  handleLogout={handleLogout}
-                />
+                    href={'/'}
+                    icon={<HiOutlineLogout size={20}/>}
+                    label={'Logout'}
+                    type={'auth'}
+                    onClose={toggleMobileNav}
+                    handleLogout={handleLogout}
+                  />
                 )}
               
               <VisuallyHidden />
