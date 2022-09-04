@@ -37,6 +37,11 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  experimental: {
+    images: {
+      unoptimized: true,
+    }
+  },
   webpack: (config) => {
     config.plugins.push(
       new CircularDependencyPlugin({

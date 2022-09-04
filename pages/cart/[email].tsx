@@ -54,12 +54,12 @@ const Cart : NextPage<WithRouterProps> = ({ router }) => {
               <React.Fragment key={i}>
                 <VStack width={'100%'} alignItems={'start'} spacing={5} mb={'1em'}>
                   <Grid templateColumns={'repeat(12,1fr)'} gap={{base: '2em', md: '3em'}}>
-                    <GridItem colSpan={{base: 3, md: 2}}>
+                    <GridItem colSpan={{base: 3, md: 2}} onClick={() => redirectToInfoPage(products[productIndex].prodId!)}>
                       <Box borderRadius={'2xl'} boxShadow={'lg'} overflow={'hidden'} alignItems={'center'} justifyContent={'center'} position={'relative'} w={{base: 20, md: 32}} h={{base: 20, md: 32}}>
                         <Image alt={'product image'} src={products[productIndex].imageUrl!} objectFit={'cover'} layout={'fill'}/>
                       </Box>
                     </GridItem>
-                    <GridItem colSpan={{base: 5, md: 6}} display={'flex'} flexDir={'column'} alignItems={'left'} justifyContent={'space-evenly'}>
+                    <GridItem colSpan={{base: 5, md: 6}} onClick={() => redirectToInfoPage(products[productIndex].prodId!)} display={'flex'} flexDir={'column'} alignItems={'left'} justifyContent={'space-evenly'}>
                       <Heading fontSize={titleFontSize} fontWeight={'bold'} noOfLines={1}>{products[productIndex].prodName}</Heading>
                       <Text fontSize={smallFontSize} fontWeight={'medium'} noOfLines={1}> USD ${products[productIndex].prodPrice}</Text>
                       {products[productIndex].prodStock > 0 ?
@@ -71,9 +71,9 @@ const Cart : NextPage<WithRouterProps> = ({ router }) => {
                         </Text> 
                       }
                     </GridItem>
-                    <GridItem colSpan={{base: 1, md: 2}} display={'flex'} flexDir={'row'} alignItems={'center'} justifyContent={'center'}>
+                    <GridItem colSpan={{base: 1, md: 2}} onClick={() => redirectToInfoPage(products[productIndex].prodId!)} display={'flex'} flexDir={'row'} alignItems={'center'} justifyContent={'center'}>
                       <Stat textAlign={'center'}>
-                        <StatLabel display={{base:'none', md: 'flex'}}>Quantity</StatLabel>
+                        <StatLabel display={{base:'none', md: 'flex'}} justifyContent={'center'}>Quantity</StatLabel>
                         <StatNumber fontSize={titleFontSize}>{cartItem.quantity}</StatNumber>
                       </Stat>
                     </GridItem>
@@ -170,26 +170,37 @@ const SmButtonContent : React.FC<IButtonContent> = ({ cartItem, productIndex, pr
   }
 
   return (
-    <Menu isLazy closeOnSelect>
-      <MenuButton
-        as={IconButton}
-        icon={<ChevronDownIcon />}
-        bg={'transparent'}
-        variant={'outline'}
+      <CustomIconButton
+        icon={iconButtonContent[2].icon}
+        lightGradient={iconButtonContent[2].lightGradient}
+        darkGradient={iconButtonContent[2].darkGradient}
+        hoverLightGradient={iconButtonContent[2].hoverLightGradient}
+        hoverDarkGradient={iconButtonContent[2].hoverDarkGradient}
+        lightColor={iconButtonContent[2].lightColor}
+        darkColor={iconButtonContent[2].darkColor}
+        ariaLabel={iconButtonContent[2].ariaLabel}
+        onAction={handleRemove}
       />
-      <MenuList 
-          bg={useColorModeValue('gray.100','gray.900')} 
-          color={useColorModeValue('gray.900','gray.100')}
-        >
-        <Link href={`/product/${products[productIndex].prodId}`}>
-          <MenuItem icon={<FaInfo />} _hover={{ bgGradient: hoverLightGradient }} _dark={{ _hover: { bgGradient: hoverDarkGradient }}}>
-            Details
-          </MenuItem>
-        </Link>
-        <MenuItem icon={<BsTrash />} _hover={{ bgGradient: hoverErrorLightGradient }} _dark={{ _hover: { bgGradient: hoverErrorDarkGradient }}} onClick={handleRemove}>
-          Remove
-        </MenuItem>
-      </MenuList>
-    </Menu>
+    // <Menu isLazy closeOnSelect>
+    //   <MenuButton
+    //     as={IconButton}
+    //     icon={<ChevronDownIcon />}
+    //     bg={'transparent'}
+    //     variant={'outline'}
+    //   />
+    //   <MenuList 
+    //       bg={useColorModeValue('gray.100','gray.900')} 
+    //       color={useColorModeValue('gray.900','gray.100')}
+    //     >
+    //     <Link href={`/product/${products[productIndex].prodId}`}>
+    //       <MenuItem icon={<FaInfo />} _hover={{ bgGradient: hoverLightGradient }} _dark={{ _hover: { bgGradient: hoverDarkGradient }}}>
+    //         Details
+    //       </MenuItem>
+    //     </Link>
+    //     <MenuItem icon={<BsTrash />} _hover={{ bgGradient: hoverErrorLightGradient }} _dark={{ _hover: { bgGradient: hoverErrorDarkGradient }}} onClick={handleRemove}>
+    //       Remove
+    //     </MenuItem>
+    //   </MenuList>
+    // </Menu>
   )
 }

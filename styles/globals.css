@@ -3,3 +3,14 @@ html{
   scroll-behavior: smooth;
   min-height: 100%;
 }
+
+@media screen and (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    display: none;
+  }
+}
