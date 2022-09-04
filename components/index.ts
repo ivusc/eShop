@@ -1,5 +1,5 @@
 import { Hero } from "./Hero";
-import { Navbar } from './layout/NewNavbar';
+import { Navbar } from './layout/Navbar';
 import { ProductCard } from "./common/Card";
 import { Details } from "./product/Details";
 import { GradientButton } from "./common/GradientButton";
